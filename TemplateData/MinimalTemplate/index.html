@@ -11,26 +11,42 @@
       overflow: hidden;
     }
     #unity-container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    canvas {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(#f8f8f8, #dcdcdc);
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="unity-container" class="unity-desktop">
+  <div id="unity-container">
     <canvas id="unity-canvas"></canvas>
   </div>
-  <script src="%UNITY_WEBGL_LOADER_URL%"></script>
   <script>
-    createUnityInstance(document.querySelector("#unity-canvas"), {
-      dataUrl: "%UNITY_WEBGL_BUILD_URL%.data",
-      frameworkUrl: "%UNITY_WEBGL_BUILD_URL%.framework.js",
-      codeUrl: "%UNITY_WEBGL_BUILD_URL%.wasm",
-    });
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/WebGLBuild.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/WebGLBuild.data",
+      frameworkUrl: buildUrl + "/WebGLBuild.framework.js",
+      codeUrl: buildUrl + "/WebGLBuild.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "SeninAdın",
+      productName: "SanalManken",
+      productVersion: "1.0",
+    };
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(document.querySelector("#unity-canvas"), config);
+    };
+    document.body.appendChild(script);
   </script>
 </body>
 </html>
